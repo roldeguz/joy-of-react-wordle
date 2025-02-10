@@ -1,28 +1,24 @@
 import React from "react"
 
-function Banner({ answer, correct, numTries, retryGame }) {
-  function handleFormSubmit(e) {
-    e.prreventDefault()
-
-    retryGame()
-  }
-
+function Banner({ answer, numTries, gameStatus, restartGame }) {
   return (
-    <form onSubmit={handleFormSubmit}>
-      <div className={correct ? "happy banner" : "sad banner"}>
-        {correct && (
-          <p>
-            <strong>Congratulations!</strong> Got it in <strong>{numTries} guesses</strong>.
-          </p>
-        )}
-        {!correct && (
-          <p>
-            Sorry, the correct answer is <strong>{answer}</strong>.
-          </p>
-        )}
-        <button type="submit">Restart Game</button>
-      </div>
-    </form>
+    <div className={gameStatus == "won" ? "happy banner" : "sad banner"}>
+      {gameStatus == "won" && (
+        <p>
+          <strong>Congratulations!</strong> Got it in{" "}
+          <strong>
+            {numTries} {numTries == 1 ? " guess" : " guesses"}
+          </strong>
+          .
+        </p>
+      )}
+      {gameStatus == "lost" && (
+        <p>
+          Sorry, the correct answer is <strong>{answer}</strong>.
+        </p>
+      )}
+      <button onClick={restartGame}>Restart Game</button>
+    </div>
   )
 }
 

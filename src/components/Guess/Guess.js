@@ -1,21 +1,19 @@
-import React, { useState } from "react"
+import React from "react"
 
-function Guess({ addGuessList, correct, gameFinsished }) {
-  const [guess, setGuess] = useState("")
+import { range } from "../../utils"
 
-  function handleFormSubmit(e) {
-    e.preventDefault()
-
-    //console.log({ guess: guess.toUpperCase() })
-    addGuessList(guess.toUpperCase())
-    setGuess("")
-  }
-
+function Guess({ value, result }) {
   return (
-    <form className="guess-input-wrapper" onSubmit={handleFormSubmit}>
-      <label htmlFor="guess-input">Enter guess:</label>
-      <input id="guess-input" type="text" value={guess} onChange={e => setGuess(e.target.value)} pattern="[A-Za-z]{5,5}" minLength={5} maxLength={5} required disabled={correct || gameFinsished ? true : false} />
-    </form>
+    <p className="guess">
+      {range(5).map(index => {
+        const className = result ? `cell ${result[index].status}` : `cell`
+        return (
+          <span key={index} className={className}>
+            {value ? value[index] : undefined}
+          </span>
+        )
+      })}
+    </p>
   )
 }
 
